@@ -13,3 +13,5 @@ dependencies[] = libraries
 dependencies[] = module_filter
 dependencies[] = r4032login
 dependencies[] = transliteration
+
+dependencies[] = nonscolog_entry_feature
