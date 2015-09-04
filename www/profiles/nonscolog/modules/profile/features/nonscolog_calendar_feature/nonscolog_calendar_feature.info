@@ -1,0 +1,12 @@
+name = Calendar Feature
+core = 7.x
+package = Non-sco Log Features
+dependencies[] = calendar
+dependencies[] = date_views
+dependencies[] = nonscolog_entry_feature
+dependencies[] = views
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = entries_calendar
+features_exclude[dependencies][ctools] = ctools
+project path = profiles/nonscolog/modules/profile/features
