@@ -106,10 +106,51 @@ function nonscolog_entry_feature_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-entry-field_entry_people'
+  $field_instances['node-entry-field_entry_people'] = array(
+    'bundle' => 'entry',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Select which person(s) was/were involved in this entry',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 2,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_entry_people',
+    'label' => 'People',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => -2,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('Body');
   t('Date');
+  t('People');
+  t('Select which person(s) was/were involved in this entry');
 
   return $field_instances;
 }
