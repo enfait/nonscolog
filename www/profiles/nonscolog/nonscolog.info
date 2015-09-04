@@ -1,0 +1,15 @@
+name = Non-sco Log
+description = Log your non-sco activities
+core = 7.x
+distribution_name = Non-sco Log
+
+exclusive = TRUE
+
+dependencies[] = admin_menu_toolbar
+dependencies[] = betterlogin
+dependencies[] = features
+dependencies[] = l10n_update
+dependencies[] = libraries
+dependencies[] = module_filter
+dependencies[] = r4032login
+dependencies[] = transliteration

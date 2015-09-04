@@ -1,0 +1,13 @@
+core: 7.x
+api: 2
+
+projects:
+  drupal:
+    version: 7.39
+    patch:
+     - "http://drupal.org/files/issues/install-redirect-on-empty-database-728702-36.patch"
+     - "http://drupal.org/files/drupal-1470656-14.patch"
+     - "http://drupal.org/files/drupal-865536-204.patch"
+     - "https://drupal.org/files/drupal-7.x-allow_profile_change_sys_req-1772316-21.patch"
+     - "http://drupal.org/files/1275902-15-entity_uri_callback-D7.patch"
+     - "https://drupal.org/files/drupal-add_taxonomy_filter_to_content_admin-1162752-14.patch"

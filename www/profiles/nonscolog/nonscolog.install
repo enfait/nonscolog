@@ -1,0 +1,153 @@
+<?php
+/**
+ * @file
+ * Profile installation file.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function nonscolog_install() {
+
+  $t = get_t();
+
+  // Enable the admin theme.
+  $admin_theme   = 'shiny';
+  $default_theme = 'bartik';
+  theme_enable(array($admin_theme, $default_theme));
+  variable_set('theme_default', $default_theme);
+  variable_set('admin_theme', $admin_theme);
+  variable_set('node_admin_theme', '1');
+  variable_set('file_private_path', 'sites/default/private');
+
+  variable_set('r4032login_display_denied_message', FALSE);
+
+  variable_set('file_default_scheme', 'private');
+  variable_set('file_entity_file_upload_wizard_skip_scheme', TRUE);
+
+  variable_set('user_register', USER_REGISTER_ADMINISTRATORS_ONLY);
+
+  variable_set('error_level', 0);
+
+  locale_add_language('fr');
+
+  $languages        = language_list();
+  $default_langcode = 'fr';
+  variable_set('language_default', $languages[$default_langcode]);
+
+  // Enable en prefix for english language.
+  db_update('languages')
+    ->fields(array(
+      'prefix' => 'en',
+    ))
+    ->condition('language', 'en')
+    ->execute();
+
+  // Enable language detection via url.
+  $negotiation['locale-url'] = array(
+    'types'       => array(
+      'language_content',
+      'language',
+      'language_url',
+    ),
+    'callbacks'   => array(
+      'language'    => 'locale_language_from_url',
+      'switcher'    => 'locale_language_switcher_url',
+      'url_rewrite' => 'locale_language_url_rewrite_url',
+    ),
+    'file'        => 'includes/locale.inc',
+    'weight'      => '-8,',
+    'name'        => 'URL',
+    'description' => $t('Determine the language from the URL (Path prefix or domain).'),
+    'config'      => 'admin/config/regional/language/configure/url',
+  );
+  language_negotiation_set('language', $negotiation);
+
+  // Default role for administrators, with all available permissions assigned.
+  $admin_role         = new stdClass();
+  $admin_role->name   = 'administrator';
+  $admin_role->weight = 2;
+  user_role_save($admin_role);
+  user_role_grant_permissions($admin_role->rid, array_keys(module_invoke_all('permission')));
+  // Set this as the administrator role.
+  variable_set('user_admin_role', $admin_role->rid);
+
+  // Assign user 1 the "administrator" role.
+  db_insert('users_roles')
+    ->fields(array('uid' => 1, 'rid' => $admin_role->rid))
+    ->execute();
+}
+
+/**
+ * Implements hook_install_tasks_alter().
+ */
+function patrickroger_site_install_tasks_alter(&$tasks, $install_state) {
+  $tasks['install_select_profile']['display'] = FALSE;
+  $tasks['install_select_locale']['display']  = FALSE;
+  $tasks['install_select_locale']['run']      = INSTALL_TASK_SKIP;
+
+  // The "Welcome" screen needs to come after the first two steps
+  // (profile and language selection), despite the fact that they are disabled.
+  $new_task['install_welcome'] = array(
+    'display'      => TRUE,
+    'display_name' => st('Welcome'),
+    'type'         => 'form',
+    'run'          => isset($install_state['parameters']['welcome']) ? INSTALL_TASK_SKIP : INSTALL_TASK_RUN_IF_REACHED,
+  );
+  $old_tasks                   = $tasks;
+  $tasks                       = array_slice($old_tasks, 0, 2) + $new_task + array_slice($old_tasks, 2);
+
+  // Set the installation theme.
+  _install_set_theme('shiny');
+
+}
+
+
+/**
+ * Task callback: shows the welcome screen.
+ */
+function install_welcome($form, &$form_state, &$install_state) {
+  drupal_set_title(st('Website Setup'));
+  $message = '<p>' . st('This wizard will guide you through the setup of your new website instance.') . '</p>';
+
+  $form                    = array();
+  $form['welcome_message'] = array(
+    '#markup' => $message,
+  );
+
+  $form['actions']           = array(
+    '#type' => 'actions',
+  );
+  $form['actions']['submit'] = array(
+    '#type'   => 'submit',
+    '#value'  => st("Start installation"),
+    '#weight' => 10,
+  );
+  return $form;
+}
+
+/**
+ * Welcome screen form submit handler.
+ */
+function install_welcome_submit($form, &$form_state) {
+  global $install_state;
+
+  $install_state['parameters']['welcome'] = 'done';
+  $install_state['parameters']['locale']  = 'en';
+}
+
+/**
+ * Force-set a theme at any point during the execution of the request.
+ *
+ * Drupal doesn't give us the option to set the theme during the installation
+ * process and forces enable the maintenance theme too early in the request
+ * for us to modify it in a clean way.
+ */
+function _install_set_theme($target_theme) {
+  if ($GLOBALS['theme'] != $target_theme) {
+    unset($GLOBALS['theme']);
+    drupal_static_reset();
+    $GLOBALS['conf']['maintenance_theme'] = $target_theme;
+    _drupal_maintenance_theme();
+  }
+}
