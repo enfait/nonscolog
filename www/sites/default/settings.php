@@ -5,7 +5,7 @@ $databases = array();
 $config_directories = array();
 $config_directories[CONFIG_SYNC_DIRECTORY] = 'sites/default/sync';
 
-$settings['install_profile'] = 'minimal';
+$settings['install_profile'] = 'nonscolog';
 
 $settings['hash_salt'] = 'Bn7d9YVL-qIppbI-Xq5VDxYRCF4DdE4R4PGlrRuM1hj_tR08kRIZ1nlxLT02vyJfJwfbr76TRw';
 

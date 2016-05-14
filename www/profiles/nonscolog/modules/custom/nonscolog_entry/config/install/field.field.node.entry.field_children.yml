@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_children
+    - node.type.entry
+    - taxonomy.vocabulary.children
+id: node.entry.field_children
+field_name: field_children
+entity_type: node
+bundle: entry
+label: Children
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      children: children
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

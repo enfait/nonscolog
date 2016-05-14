@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the Log Entry Feature feature.
- */
-
-include_once 'nonscolog_entry_feature.features.inc';

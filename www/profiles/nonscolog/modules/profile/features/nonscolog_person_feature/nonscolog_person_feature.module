@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the Person Feature feature.
- */
-
-include_once 'nonscolog_person_feature.features.inc';

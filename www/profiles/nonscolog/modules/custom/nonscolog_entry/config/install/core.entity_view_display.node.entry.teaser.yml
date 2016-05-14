@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.entry.body
+    - field.field.node.entry.field_children
+    - field.field.node.entry.field_duration
+    - field.field.node.entry.field_files
+    - field.field.node.entry.field_subjects
+    - node.type.entry
+  module:
+    - text
+    - user
+id: node.entry.teaser
+targetEntityType: node
+bundle: entry
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_children: true
+  field_duration: true
+  field_files: true
+  field_subjects: true

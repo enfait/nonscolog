@@ -1,0 +1,14 @@
+name: Entry
+description: 'Provides Entry content type and related configuration. A log entry'
+type: module
+core: 8.x
+dependencies:
+  - field
+  - file
+  - menu_ui
+  - node
+  - path
+  - taxonomy
+  - text
+  - user
+package: nonscolog
