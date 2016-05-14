@@ -1,0 +1,15 @@
+/core
+/modules/contrib
+/sites/*
+!/sites/default
+/.csslintrc
+/.editorconfig
+/.eslintignore
+/.eslintrc
+/.gitattributes
+/.htaccess
+/autoload.php
+/index.php
+/robots.txt
+/update.php
+/web.config

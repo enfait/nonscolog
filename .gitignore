@@ -1,11 +1,5 @@
-.idea
-docker/local/mysql/data
-www/*
-!www/core.make.yml
-!www/Dockerfile
-!www/profiles
-www/profiles/*
-!www/profiles/nonscolog
-www/profiles/nonscolog/modules/contrib
-www/profiles/nonscolog/modules/devel
-www/profiles/nonscolog/themes/contrib
+*.iml
+.idea/
+/var
+/vendor
+
