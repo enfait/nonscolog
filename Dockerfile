@@ -23,3 +23,5 @@ USER root
 RUN chown www-data:www-data -R /project/www/profiles/custom /project/www/sites/default
 
 WORKDIR /project/www
+
+VOLUME /project/www/sites/default/files /project/www/sites/default/private
